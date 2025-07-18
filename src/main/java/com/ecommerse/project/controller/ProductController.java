@@ -24,14 +24,16 @@ public class ProductController {
         ProductDTO updatedProductDTO=productService.addProduct(categoryId,productDTO);
         return new ResponseEntity<>(updatedProductDTO, HttpStatus.CREATED);
     }
-    @GetMapping("/public/product/getallproduct")
+    @GetMapping("/public/products")
     public ResponseEntity<ProductResponce> getAllProducts(
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "pageNumber", defaultValue = AppConstant.PAGE_NUMBER) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = AppConstant.PAGE_SIZE) Integer pageSize,
             @RequestParam(name = "sortBy", defaultValue = AppConstant.SORT_BY_Product) String sortBy,
             @RequestParam(name = "sortOrder", defaultValue = AppConstant.SORT_ORDER) String sortOrder) {
 
-        ProductResponce productResponce = productService.getAllProducts(pageNumber, pageSize, sortBy, sortOrder);
+        ProductResponce productResponce = productService.getAllProducts(pageNumber, pageSize, sortBy, sortOrder,keyword,category);
         return new ResponseEntity<>(productResponce, HttpStatus.OK);
     }
 
