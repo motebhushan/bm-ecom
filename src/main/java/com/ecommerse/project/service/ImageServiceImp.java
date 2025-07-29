@@ -1,36 +1,27 @@
 package com.ecommerse.project.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
-public class ImageServiceImp implements ImageService{
+public class ImageServiceImp implements ImageService {
+
+    private final Cloudinary cloudinary;
+
+    @Autowired
+    public ImageServiceImp(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
     @Override
     public String saveImage(String path, MultipartFile image) throws IOException {
-        String originalName = image.getOriginalFilename();
-        if (originalName == null) {
-            throw new IOException("Invalid file name");
-        }
-
-        String uniqueName = UUID.randomUUID().toString();
-        String extension = originalName.substring(originalName.lastIndexOf('.'));
-        String fileName = uniqueName + extension;
-
-        File folder = new File(path);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        String filePath = path + File.separator + fileName;
-        Files.copy(image.getInputStream(), Paths.get(filePath));
-
-        return fileName;
+        Map<?, ?> result = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        return result.get("secure_url").toString();
     }
 }
