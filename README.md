@@ -66,19 +66,6 @@ The backend will run on [http://localhost:8080](http://localhost:8080)
 
 ---
 
-## 🧪 API Testing
-
-Use Postman to test APIs such as:
-
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/products`
-- `POST /api/cart`
-- (Add more as needed)
-
-🔐 Make sure to include the JWT token in headers for protected routes.
-
----
 
 ## 👨‍💻 Developed by
 
