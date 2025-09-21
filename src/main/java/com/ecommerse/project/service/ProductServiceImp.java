@@ -124,7 +124,7 @@ public class ProductServiceImp implements ProductService{
         return response;
     }
     private String constructImageUrl(String imageName) {
-        return imageBaseUrl.endsWith("/") ? imageBaseUrl + imageName : imageBaseUrl + "/" + imageName;
+        return imageName;
     }
 
     @Override
